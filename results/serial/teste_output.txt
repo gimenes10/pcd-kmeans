@@ -1,0 +1,23 @@
+========================================
+K-means 1D - Versão SERIAL (Baseline)
+========================================
+Parâmetros:
+  N = 20 pontos
+  K = 4 clusters
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 4
+  SSE final: 344.875000
+  Tempo: 0.00 ms
+  Throughput: 4761.90 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 2279.000000
+  [  1] SSE = 405.437500 (Δ = -1873.562500)
+  [  2] SSE = 344.875000 (Δ = -60.562500)
+  [  3] SSE = 344.875000 (Δ = 0.000000)
+
+Assignments salvos em: results/serial/teste_assign.csv
+Centróides salvos em: results/serial/teste_centroids.csv

@@ -1,0 +1,529 @@
+========================================
+RELATÓRIO COMPLETO - K-MEANS 1D
+Data: Sat Oct 18 19:08:58 -03 2025
+========================================
+
+=== 1. SPEEDUP RESULTS CSV ===
+Dataset,Threads,Time_ms,SSE,Iters,Speedup,Efficiency
+pequeno,1,0.17,82554.918800,3,.88,88.00
+pequeno,2,0.30,82554.918800,3,.50,25.00
+pequeno,4,0.40,82554.918800,3,.37,9.00
+pequeno,8,0.59,82554.918800,3,.25,3.00
+pequeno,16,0.92,82554.918800,3,.16,1.00
+medio,1,2.33,827601.424480,3,.94,94.00
+medio,2,1.48,827601.424480,3,1.48,74.00
+medio,4,1.25,827601.424480,3,1.76,44.00
+medio,8,1.37,827601.424480,3,1.60,20.00
+medio,16,1.68,827601.424480,3,1.30,8.00
+grande,1,34.27,8249412.958850,3,1.01,101.00
+grande,2,17.98,8249412.958866,3,1.93,96.00
+grande,4,9.67,8249412.958873,3,3.59,89.00
+grande,8,7.36,8249412.958864,3,4.72,59.00
+grande,16,7.75,8249412.958865,3,4.48,28.00
+
+=== 2. INFORMAÇÕES DO SISTEMA ===
+CPU: AMD Ryzen 7 4800HS with Radeon Graphics
+Cores físicos: 8
+Threads por core: 2
+Total threads disponíveis: 16
+Memória RAM: 15Gi
+GCC: gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+Sistema Operacional: Linux 4.4.0-19041-Microsoft
+
+=== 3. RESULTADOS SERIAL (BASELINE - ETAPA 0) ===
+
+--- TESTE (20 pontos, 4 clusters) ---
+========================================
+K-means 1D - Versão SERIAL (Baseline)
+========================================
+Parâmetros:
+  N = 20 pontos
+  K = 4 clusters
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 4
+  SSE final: 344.875000
+  Tempo: 0.00 ms
+  Throughput: 4761.90 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 2279.000000
+  [  1] SSE = 405.437500 (Δ = -1873.562500)
+  [  2] SSE = 344.875000 (Δ = -60.562500)
+  [  3] SSE = 344.875000 (Δ = 0.000000)
+
+Assignments salvos em: results/serial/teste_assign.csv
+Centróides salvos em: results/serial/teste_centroids.csv
+
+--- PEQUENO (10k pontos, 4 clusters) ---
+========================================
+K-means 1D - Versão SERIAL (Baseline)
+========================================
+Parâmetros:
+  N = 10000 pontos
+  K = 4 clusters
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 82554.918800
+  Tempo: 0.15 ms
+  Throughput: 64724.92 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 384605.000000
+  [  1] SSE = 82554.918800 (Δ = -302050.081200)
+  [  2] SSE = 82554.918800 (Δ = 0.000000)
+
+Assignments salvos em: results/serial/pequeno_assign.csv
+Centróides salvos em: results/serial/pequeno_centroids.csv
+
+--- MÉDIO (100k pontos, 8 clusters) ---
+========================================
+K-means 1D - Versão SERIAL (Baseline)
+========================================
+Parâmetros:
+  N = 100000 pontos
+  K = 8 clusters
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 827601.424480
+  Tempo: 2.20 ms
+  Throughput: 45438.02 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 3870380.000000
+  [  1] SSE = 827601.424480 (Δ = -3042778.575520)
+  [  2] SSE = 827601.424480 (Δ = 0.000000)
+
+Assignments salvos em: results/serial/medio_assign.csv
+Centróides salvos em: results/serial/medio_centroids.csv
+
+--- GRANDE (1M pontos, 16 clusters) ---
+========================================
+K-means 1D - Versão SERIAL (Baseline)
+========================================
+Parâmetros:
+  N = 1000000 pontos
+  K = 16 clusters
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 8249412.958850
+  Tempo: 34.75 ms
+  Throughput: 28776.73 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 38551277.000000
+  [  1] SSE = 8249412.958850 (Δ = -30301864.041150)
+  [  2] SSE = 8249412.958850 (Δ = 0.000000)
+
+Assignments salvos em: results/serial/grande_assign.csv
+Centróides salvos em: results/serial/grande_centroids.csv
+
+=== 4. RESULTADOS OPENMP - DATASET PEQUENO (ETAPA 1) ===
+
+--- PEQUENO - 1 THREADS ---
+========================================
+K-means 1D - Versão OPENMP
+========================================
+Parâmetros:
+  N = 10000 pontos
+  K = 4 clusters
+  Threads = 1
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 82554.918800
+  Tempo: 0.17 ms
+  Throughput: 58962.30 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 384605.000000
+  [  1] SSE = 82554.918800 (Δ = -302050.081200)
+  [  2] SSE = 82554.918800 (Δ = 0.000000)
+
+Assignments salvos em: results/openmp/pequeno_t1_assign.csv
+Centróides salvos em: results/openmp/pequeno_t1_centroids.csv
+
+--- PEQUENO - 2 THREADS ---
+========================================
+K-means 1D - Versão OPENMP
+========================================
+Parâmetros:
+  N = 10000 pontos
+  K = 4 clusters
+  Threads = 2
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 82554.918800
+  Tempo: 0.30 ms
+  Throughput: 33534.55 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 384605.000000
+  [  1] SSE = 82554.918800 (Δ = -302050.081200)
+  [  2] SSE = 82554.918800 (Δ = 0.000000)
+
+Assignments salvos em: results/openmp/pequeno_t2_assign.csv
+Centróides salvos em: results/openmp/pequeno_t2_centroids.csv
+
+--- PEQUENO - 4 THREADS ---
+========================================
+K-means 1D - Versão OPENMP
+========================================
+Parâmetros:
+  N = 10000 pontos
+  K = 4 clusters
+  Threads = 4
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 82554.918800
+  Tempo: 0.40 ms
+  Throughput: 25150.91 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 384605.000000
+  [  1] SSE = 82554.918800 (Δ = -302050.081200)
+  [  2] SSE = 82554.918800 (Δ = 0.000000)
+
+Assignments salvos em: results/openmp/pequeno_t4_assign.csv
+Centróides salvos em: results/openmp/pequeno_t4_centroids.csv
+
+--- PEQUENO - 8 THREADS ---
+========================================
+K-means 1D - Versão OPENMP
+========================================
+Parâmetros:
+  N = 10000 pontos
+  K = 4 clusters
+  Threads = 8
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 82554.918800
+  Tempo: 0.59 ms
+  Throughput: 16975.04 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 384605.000000
+  [  1] SSE = 82554.918800 (Δ = -302050.081200)
+  [  2] SSE = 82554.918800 (Δ = 0.000000)
+
+Assignments salvos em: results/openmp/pequeno_t8_assign.csv
+Centróides salvos em: results/openmp/pequeno_t8_centroids.csv
+
+--- PEQUENO - 16 THREADS ---
+========================================
+K-means 1D - Versão OPENMP
+========================================
+Parâmetros:
+  N = 10000 pontos
+  K = 4 clusters
+  Threads = 16
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 82554.918800
+  Tempo: 0.92 ms
+  Throughput: 10921.80 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 384605.000000
+  [  1] SSE = 82554.918800 (Δ = -302050.081200)
+  [  2] SSE = 82554.918800 (Δ = 0.000000)
+
+Assignments salvos em: results/openmp/pequeno_t16_assign.csv
+Centróides salvos em: results/openmp/pequeno_t16_centroids.csv
+
+=== 5. RESULTADOS OPENMP - DATASET MÉDIO (ETAPA 1) ===
+
+--- MÉDIO - 1 THREADS ---
+========================================
+K-means 1D - Versão OPENMP
+========================================
+Parâmetros:
+  N = 100000 pontos
+  K = 8 clusters
+  Threads = 1
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 827601.424480
+  Tempo: 2.33 ms
+  Throughput: 42922.14 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 3870380.000000
+  [  1] SSE = 827601.424480 (Δ = -3042778.575520)
+  [  2] SSE = 827601.424480 (Δ = 0.000000)
+
+Assignments salvos em: results/openmp/medio_t1_assign.csv
+Centróides salvos em: results/openmp/medio_t1_centroids.csv
+
+--- MÉDIO - 2 THREADS ---
+========================================
+K-means 1D - Versão OPENMP
+========================================
+Parâmetros:
+  N = 100000 pontos
+  K = 8 clusters
+  Threads = 2
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 827601.424480
+  Tempo: 1.48 ms
+  Throughput: 67512.83 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 3870380.000000
+  [  1] SSE = 827601.424480 (Δ = -3042778.575520)
+  [  2] SSE = 827601.424480 (Δ = 0.000000)
+
+Assignments salvos em: results/openmp/medio_t2_assign.csv
+Centróides salvos em: results/openmp/medio_t2_centroids.csv
+
+--- MÉDIO - 4 THREADS ---
+========================================
+K-means 1D - Versão OPENMP
+========================================
+Parâmetros:
+  N = 100000 pontos
+  K = 8 clusters
+  Threads = 4
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 827601.424480
+  Tempo: 1.25 ms
+  Throughput: 80295.49 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 3870380.000000
+  [  1] SSE = 827601.424480 (Δ = -3042778.575520)
+  [  2] SSE = 827601.424480 (Δ = 0.000000)
+
+Assignments salvos em: results/openmp/medio_t4_assign.csv
+Centróides salvos em: results/openmp/medio_t4_centroids.csv
+
+--- MÉDIO - 8 THREADS ---
+========================================
+K-means 1D - Versão OPENMP
+========================================
+Parâmetros:
+  N = 100000 pontos
+  K = 8 clusters
+  Threads = 8
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 827601.424480
+  Tempo: 1.37 ms
+  Throughput: 73201.08 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 3870380.000000
+  [  1] SSE = 827601.424480 (Δ = -3042778.575520)
+  [  2] SSE = 827601.424480 (Δ = -0.000000)
+
+Assignments salvos em: results/openmp/medio_t8_assign.csv
+Centróides salvos em: results/openmp/medio_t8_centroids.csv
+
+--- MÉDIO - 16 THREADS ---
+========================================
+K-means 1D - Versão OPENMP
+========================================
+Parâmetros:
+  N = 100000 pontos
+  K = 8 clusters
+  Threads = 16
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 827601.424480
+  Tempo: 1.68 ms
+  Throughput: 59619.62 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 3870380.000000
+  [  1] SSE = 827601.424480 (Δ = -3042778.575520)
+  [  2] SSE = 827601.424480 (Δ = -0.000000)
+
+Assignments salvos em: results/openmp/medio_t16_assign.csv
+Centróides salvos em: results/openmp/medio_t16_centroids.csv
+
+=== 6. RESULTADOS OPENMP - DATASET GRANDE (ETAPA 1) ===
+
+--- GRANDE - 1 THREADS ---
+========================================
+K-means 1D - Versão OPENMP
+========================================
+Parâmetros:
+  N = 1000000 pontos
+  K = 16 clusters
+  Threads = 1
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 8249412.958850
+  Tempo: 34.27 ms
+  Throughput: 29178.25 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 38551277.000000
+  [  1] SSE = 8249412.958850 (Δ = -30301864.041150)
+  [  2] SSE = 8249412.958850 (Δ = 0.000000)
+
+Assignments salvos em: results/openmp/grande_t1_assign.csv
+Centróides salvos em: results/openmp/grande_t1_centroids.csv
+
+--- GRANDE - 2 THREADS ---
+========================================
+K-means 1D - Versão OPENMP
+========================================
+Parâmetros:
+  N = 1000000 pontos
+  K = 16 clusters
+  Threads = 2
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 8249412.958866
+  Tempo: 17.98 ms
+  Throughput: 55629.42 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 38551277.000000
+  [  1] SSE = 8249412.958866 (Δ = -30301864.041134)
+  [  2] SSE = 8249412.958866 (Δ = 0.000000)
+
+Assignments salvos em: results/openmp/grande_t2_assign.csv
+Centróides salvos em: results/openmp/grande_t2_centroids.csv
+
+--- GRANDE - 4 THREADS ---
+========================================
+K-means 1D - Versão OPENMP
+========================================
+Parâmetros:
+  N = 1000000 pontos
+  K = 16 clusters
+  Threads = 4
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 8249412.958873
+  Tempo: 9.67 ms
+  Throughput: 103375.20 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 38551277.000000
+  [  1] SSE = 8249412.958873 (Δ = -30301864.041127)
+  [  2] SSE = 8249412.958873 (Δ = 0.000000)
+
+Assignments salvos em: results/openmp/grande_t4_assign.csv
+Centróides salvos em: results/openmp/grande_t4_centroids.csv
+
+--- GRANDE - 8 THREADS ---
+========================================
+K-means 1D - Versão OPENMP
+========================================
+Parâmetros:
+  N = 1000000 pontos
+  K = 16 clusters
+  Threads = 8
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 8249412.958864
+  Tempo: 7.36 ms
+  Throughput: 135910.19 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 38551277.000000
+  [  1] SSE = 8249412.958864 (Δ = -30301864.041136)
+  [  2] SSE = 8249412.958864 (Δ = 0.000000)
+
+Assignments salvos em: results/openmp/grande_t8_assign.csv
+Centróides salvos em: results/openmp/grande_t8_centroids.csv
+
+--- GRANDE - 16 THREADS ---
+========================================
+K-means 1D - Versão OPENMP
+========================================
+Parâmetros:
+  N = 1000000 pontos
+  K = 16 clusters
+  Threads = 16
+  max_iter = 100
+  eps = 1e-06
+
+Resultados:
+  Iterações: 3
+  SSE final: 8249412.958865
+  Tempo: 7.75 ms
+  Throughput: 129083.89 pontos/ms
+
+SSE por iteração:
+  [  0] SSE = 38551277.000000
+  [  1] SSE = 8249412.958865 (Δ = -30301864.041135)
+  [  2] SSE = 8249412.958865 (Δ = 0.000000)
+
+Assignments salvos em: results/openmp/grande_t16_assign.csv
+Centróides salvos em: results/openmp/grande_t16_centroids.csv
+
+=== 7. ARQUIVOS GERADOS ===
+Total de arquivos em results/:
+63
+
+Arquivos CSV:
+-rw-r--r-- 1 gimten gimten 664 Oct 18 18:51 results/benchmarks/speedup_results.csv
+
+Gráficos gerados:
+-rw-r--r-- 1 gimten gimten 528K Oct 18 18:54 results/benchmarks/combined_analysis.png
+-rw-r--r-- 1 gimten gimten 239K Oct 18 18:54 results/benchmarks/efficiency_plot.png
+-rw-r--r-- 1 gimten gimten 180K Oct 18 18:54 results/benchmarks/execution_time_plot.png
+-rw-r--r-- 1 gimten gimten 200K Oct 18 18:54 results/benchmarks/speedup_plot.png
+
+========================================
+FIM DO RELATÓRIO COMPLETO
+Gerado em: Sat Oct 18 19:08:58 -03 2025
+========================================
